@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta author="Celso Masotti">
+    <meta name="description" content="Game em Javascript">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Game, Jogo">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Alegre Triste</title>
+    <style>
+        #areaJogo {
+            width: 449px;
+            border: 1px solid #AAA;
+        }
+        
+        #imagem {
+            width: 449px;
+            height: 372px;
+        }
+        
+        #aposta {
+            width: 449px;
+            height: 60px;
+            margin-bottom: 10px;
+            margin-top: 35px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        #iniciaJogo {
+            width: 449px;
+        }
+        
+        #resultado {
+            width: 449px;
+            height: 60px;
+        }
+        
+        #resultado #apostaTxt {
+            width: 449px;
+            height: 60px;
+            float: left;
+            padding-top: 12px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        #resultado #resultSorteado {
+            width: 449px;
+            height: 40px;
+            float: left;
+            padding-top: 15px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .cara {
+            background-color: #EEE;
+            border: 1px solid #555;
+            font-size: 9pt;
+            color: #F88;
+            padding: 6px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-radius: 12px;
+            display: inline;
+        }
+        
+        .coroa {
+            background-color: #EEE;
+            border: 1px solid #555;
+            font-size: 9pt;
+            color: #88F;
+            padding: 6px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-radius: 12px;
+            display: inline;
+        }
+        
+        .jogar {
+            background-color: #EEE;
+            border: 1px solid #555;
+            font-size: 9pt;
+            color: #3A3;
+            padding: 6px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-radius: 12px;
+        }
+        
+        #btCara {
+            float: left;
+            padding-left: 15px;
+        }
+        
+        #btCoroa {
+            padding-right: 15px;
+            float: right;
+        }
+        
+        h3 {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16pt;
+        }
+        
+        h6 {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11pt;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h3>Jogo Alegre ou Triste</h3>
+        <h6>Tente adivinhar qual imagem aparecerá: alegre ou triste!</h6>
+
+        <div id="areaJogo">
+            <div id="imagem">
+
+            </div>
+            <hr>
+
+            <div id="iniciaJogo">
+                <button class="jogar" onclick="window.location='gameAlegreTriste.html';">Jogar</button>
+            </div>
+            <div id="aposta">
+                Faça sua aposta:<br /><br />
+                <div id="btCara">
+                    <button id="btalegre" onclick="this.disabled = true;">Alegre</button>
+                </div>
+                <div id="btCoroa">
+                    <button id="bttriste" onclick="this.disabled = true;">Triste</button>
+                </div>
+            </div>
+            <div id="resultado">
+                <div id="resultSorteado"></div>
+            </div>
+        </div>
+
+    </center>
+
+
+
+
+
+    <script>
+        function jogaComputador(ap) {
+            var sorteado = Math.round(Math.random());
+            if (sorteado == 0) {
+                delay = 1000;
+                setTimeout(function() {
+                    var img = document.createElement("IMG");
+                    img.src = "img/fingerCheerful.png";
+                    img.style.width = "449px";
+                    img.style.height = "372px";
+                    document.getElementById('imagem').appendChild(img);
+                    if (ap == "alegre") {
+                        var j = document.getElementById("resultSorteado");
+                        j.style.backgroundColor = "#CFC";
+                        j.innerHTML = "DEU ALEGRE! ACERTOU!";
+                    } else {
+                        var j = document.getElementById("resultSorteado");
+                        j.style.backgroundColor = "#FCC";
+                        j.innerHTML = "DEU ALEGRE! ERROU!";
+                    }
+                }, delay);
+
+            } else {
+                delay = 2000;
+                setTimeout(function() {
+                    var img = document.createElement("IMG");
+                    img.src = "img/fingerSad.png";
+                    img.style.width = "449px";
+                    img.style.height = "372px";
+                    document.getElementById('imagem').appendChild(img);
+                    if (ap == "triste") {
+                        var j = document.getElementById("resultSorteado");
+                        j.style.backgroundColor = "#CFC";
+                        j.innerHTML = "DEU TRISTE! ACERTOU!";
+
+                    } else {
+                        var j = document.getElementById("resultSorteado");
+                        j.style.backgroundColor = "#FCC";
+                        j.innerHTML = "DEU TRISTE! ERROU!";
+                    }
+                }, delay);
+
+            }
+        }
+
+        function opcaoAlegre() {
+            ap = "alegre";
+            var btTriste = document.getElementById("bttriste");
+            btTriste.style.display = 'none';
+            var btAlegre = document.getElementById("btalegre");
+            btAlegre.style.backgroundColor = '#BAE3B9';
+            jogaComputador(ap);
+        }
+
+        function opcaoTriste() {
+            ap = "triste";
+            var btAlegre = document.getElementById("btalegre");
+            btAlegre.style.display = 'none';
+            var btTriste = document.getElementById("bttriste");
+            btTriste.style.backgroundColor = '#BAE3B9';
+            jogaComputador(ap);
+        }
+
+        function addEvents() {
+
+            var btAlegre = document.getElementById("btalegre");
+            btAlegre.addEventListener("click", opcaoAlegre);
+            var btTriste = document.getElementById("bttriste");
+            btTriste.addEventListener("click", opcaoTriste);
+
+        }
+        window.addEventListener("load", addEvents);
+    </script>
+</body>
+
+</html>
